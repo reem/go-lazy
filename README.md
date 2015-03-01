@@ -13,6 +13,7 @@ package main
 
 import lazy "github.com/reem/go-lazy"
 import "fmt"
+import "sync"
 
 type Data struct {
     int x
@@ -29,15 +30,24 @@ func main() {
     // "Expensive computation run!" will be printed once
     // some time after this.
 
+    var wg sync.WaitGroup
+    wg.Add(2)
+
     go func() {
+        defer wg.Done()
+
         thunk.Force()
         fmt.Println("data.x:", data.x)
     }()
 
     go func() {
+        defer wg.Done()
+
         thunk.Force()
         fmt.Println("data.x:", data.x)
     }()
+
+    wg.Wait()
 }
 ```
 
