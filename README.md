@@ -16,7 +16,7 @@ import "fmt"
 import "sync"
 
 type Data struct {
-    int x
+    x int
 }
 
 func main() {
